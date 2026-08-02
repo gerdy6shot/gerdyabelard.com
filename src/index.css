@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Color Tokens - Restrained Dark Architectural Palette */
+    --color-bg-deep: #08080a;
+    --color-bg-surface: #101014;
+    --color-bg-card: #15151a;
+    --color-bg-elevated: #1c1c24;
+    
+    --color-text-primary: #f4f3ef; /* Warm Ivory */
+    --color-text-secondary: #a1a1aa; /* Muted Graphite */
+    --color-text-tertiary: #63636e; /* Subtle Charcoal */
+    
+    --color-border-subtle: #22222c;
+    --color-border-medium: #333342;
+    
+    --color-accent-bronze: #c5a059;
+    --color-accent-champagne: #e5d3b3;
+    --color-accent-silver: #d1d5db;
+
+    /* Typography Hierarchy Scale */
+    --font-didone: 'Bodoni Moda', 'Cinzel', 'Playfair Display', serif;
+    --font-serif: 'Cormorant Garamond', 'Cinzel', 'Playfair Display', 'Baskerville', 'Georgia', serif;
+    --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    background-color: var(--color-bg-deep);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-bronze);
+    color: #000000;
+  }
+}
+
+/* Typography Utility Classes */
+.font-title-signature {
+  font-family: var(--font-didone);
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: 'opsz' 96, 'wght' 900;
+}
+
+/* Cinematic Film Title Typography & Hero Composition */
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #000000;
+  color: #F7F6F2;
+  padding-inline: clamp(32px, 5vw, 96px);
+  padding-block: clamp(48px, 8vh, 96px);
+}
+
+.hero-title-container {
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: "Bodoni Moda", "Libre Bodoni", serif;
+  font-size: clamp(4.5rem, 11vw, 11rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: .92;
+  letter-spacing: .12em;
+  color: #F7F6F2;
+  text-align: center;
+  white-space: nowrap;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hero-title .first {
+  display: inline-block;
+  margin-right: -0.12em;
+  z-index: 2;
+  position: relative;
+  letter-spacing: .16em;
+}
+
+.hero-title .last {
+  display: inline-block;
+  margin-left: -0.04em;
+  position: relative;
+  letter-spacing: .11em;
+}
+
+.hero-credit {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  color: rgba(247, 246, 242, .55);
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(3.25rem, 18vw, 5.6rem);
+    letter-spacing: .09em;
+    line-height: .95;
+    white-space: normal;
+  }
+
+  .hero-title .first {
+    margin-right: -.05em;
+  }
+
+  .hero-title .last {
+    margin-left: -.02em;
+  }
+
+  .hero-credit {
+    bottom: 24px;
+    right: 24px;
+    font-size: .65rem;
+    letter-spacing: .25em;
+  }
+}
+
+.bodoni-hero-wordmark {
+  font-family: 'Bodoni Moda', 'Cinzel', serif;
+  font-weight: 900;
+  font-optical-sizing: auto;
+  font-variation-settings: 'opsz' 96, 'wght' 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  line-height: 0.82;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 20;
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* --- ANTHONY MANDLER STYLE SIGNATURE DIRECTORIAL LOCKUP --- */
+.hero-container {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: 1400px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.wordmark-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  width: 100%;
+  font-family: 'Bodoni Moda', 'Didot', 'Didot HTF', 'Bodoni MT', serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #ffffff;
+  user-select: none;
+  white-space: nowrap;
+  font-variation-settings: "opsz" 96, "wght" 900;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.word-gerdy {
+  font-size: clamp(2.6rem, 7.5vw, 7.5rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: #ffffff;
+  font-variation-settings: "opsz" 96, "wght" 900;
+  display: inline-block;
+}
+
+.word-abelard {
+  font-size: clamp(2rem, 5.8vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: #ffffff;
+  font-variation-settings: "opsz" 96, "wght" 900;
+  margin-left: -0.03em; /* Tightly locked to 'Y' of GERDY */
+  transform: translateY(0.1em); /* Tucked baseline offset directly after 'Y' */
+  display: inline-block;
+}
+
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+
+.font-sans-ui {
+  font-family: var(--font-sans);
+}
+
+.tracking-cinematic {
+  letter-spacing: 0.2em;
+}
+
+.tracking-editorial {
+  letter-spacing: 0.05em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-medium);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-bronze);
+}
+
+/* Reduced Motion Respect */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
