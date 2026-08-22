@@ -188,8 +188,9 @@ export default function App() {
             : "opacity-100 scale-100 cursor-pointer"
         }`}
       >
-        <span className="font-['GFS_Didot',serif] text-[clamp(2.75rem,8.5vw,8.5rem)] font-normal tracking-[-0.02em] uppercase text-white leading-none whitespace-nowrap hover:opacity-75 transition-opacity duration-700 select-none">
-          GERDY ABELARD
+        <span className="wordmark-wrapper hover:opacity-75 transition-opacity duration-700">
+          <span className="word-gerdy">GERDY</span>
+          <span className="word-abelard">ABELARD</span>
         </span>
       </button>
 
@@ -199,8 +200,8 @@ export default function App() {
           entered ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Mandler-Style Navigation */}
-        <header className="w-full px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4 bg-[#000000]">
+        {/* Permanent Fixed Navigation Header */}
+        <header className="fixed top-0 left-0 w-full z-1000 box-border px-6 md:px-10 py-5 md:py-6 flex flex-row justify-between items-center gap-4 bg-black">
           <button
             type="button"
             onClick={() => {
@@ -209,14 +210,14 @@ export default function App() {
                 behavior: "smooth",
               });
             }}
-            className="font-['GFS_Didot',serif] text-xl md:text-2xl uppercase tracking-[0.12em] font-normal text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
+            className="font-title-signature text-sm sm:text-base md:text-lg uppercase tracking-[0.25em] font-semibold text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
             aria-label="Return to top"
           >
             GERDY ABELARD
           </button>
 
           <nav
-            className="flex items-center gap-3 font-['GFS_Didot',serif] text-xs sm:text-sm tracking-[0.08em] uppercase text-white/70 select-none"
+            className="flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
             aria-label="Main navigation"
           >
             <button
@@ -254,7 +255,7 @@ export default function App() {
             <button
               type="button"
               onClick={openContact}
-              className="text-white hover:text-[#8b1e1e] cursor-pointer transition-colors uppercase ml-1 font-['GFS_Didot',serif] focus:outline-none"
+              className="text-white hover:text-[#8b1e1e] cursor-pointer transition-colors uppercase ml-1 focus:outline-none"
             >
               Contact
             </button>
@@ -264,7 +265,7 @@ export default function App() {
         {/* 2-Column Borderless Grid with Center Hover Reveals */}
         <main
           id="work"
-          className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-[#000000]"
+          className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-[#000000] pt-19 md:pt-23"
         >
           {portfolioData.map((item) => (
             <button
