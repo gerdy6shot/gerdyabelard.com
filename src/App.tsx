@@ -529,7 +529,7 @@ export default function App() {
               aria-hidden="true"
             >
               <img
-                src="/images/about%20iamge.png"
+                src="/images/gerdy_portrait.png"
                 alt=""
                 className="w-full h-full object-cover object-[78%_38%] grayscale contrast-90 brightness-105"
               />
@@ -612,7 +612,7 @@ export default function App() {
 
               {/* Portrait — mobile only, inline below the text */}
               <img
-                src="/images/about%20iamge.png"
+                src="/images/gerdy_portrait.png"
                 alt="Gerdy Abelard portrait"
                 className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-90 brightness-105"
               />
