@@ -91,6 +91,7 @@ export default function App() {
   const [entered, setEntered] = useState(false);
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
   const [showContact, setShowContact] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const [activeTiles, setActiveTiles] = useState<Set<string>>(new Set());
 
   const lastFocusedElement = useRef<HTMLElement | null>(null);
@@ -133,6 +134,19 @@ export default function App() {
     }, 0);
   };
 
+  const openAbout = (event: React.MouseEvent<HTMLButtonElement>) => {
+    lastFocusedElement.current = event.currentTarget;
+    setShowAbout(true);
+  };
+
+  const closeAbout = () => {
+    setShowAbout(false);
+
+    window.setTimeout(() => {
+      lastFocusedElement.current?.focus();
+    }, 0);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
@@ -144,6 +158,10 @@ export default function App() {
       if (showContact) {
         closeContact();
       }
+
+      if (showAbout) {
+        closeAbout();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -151,17 +169,17 @@ export default function App() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeProject, showContact]);
+  }, [activeProject, showContact, showAbout]);
 
   useEffect(() => {
-    const isOverlayOpen = activeProject !== null || showContact;
+    const isOverlayOpen = activeProject !== null || showContact || showAbout;
 
     document.body.style.overflow = isOverlayOpen ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [activeProject, showContact]);
+  }, [activeProject, showContact, showAbout]);
 
   const enterSite = () => {
     setEntered(true);
@@ -249,6 +267,18 @@ export default function App() {
               className="hover:text-white cursor-pointer transition-colors focus:outline-none"
             >
               VENTURES
+            </button>
+
+            <span className="text-white/30 font-light" aria-hidden="true">
+              |
+            </span>
+
+            <button
+              type="button"
+              onClick={openAbout}
+              className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+            >
+              ABOUT
             </button>
 
             <span className="text-white/30 font-light" aria-hidden="true">
@@ -426,7 +456,7 @@ export default function App() {
             <div>
               <p
                 id="contact-title"
-                className="text-sm uppercase tracking-[0.1em] text-white/50 mb-2 font-normal"
+                className="text-sm uppercase tracking-widest text-white/50 mb-2 font-normal"
               >
                 (e) Direct Inquiries
               </p>
@@ -469,6 +499,84 @@ export default function App() {
               >
                 contact@gerdyabelard.com
               </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Full-Screen About Overlay */}
+      {showAbout && (
+        <div
+          className="fixed inset-0 z-1120 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center p-6 overflow-y-auto"
+          onClick={closeAbout}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="about-title"
+        >
+          <button
+            type="button"
+            onClick={closeAbout}
+            aria-label="Close about panel"
+            className="absolute top-6 right-6 sm:top-10 sm:right-10 text-white/70 hover:text-white font-title-signature text-2xl sm:text-3xl font-light leading-none transition-colors cursor-pointer focus:outline-none"
+          >
+            ×
+          </button>
+
+          <div
+            className="max-w-175 w-full text-left"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="font-title-signature text-[0.85rem] tracking-[0.2em] uppercase text-[#8b1e1e] mb-2">
+              About
+            </p>
+
+            <h2
+              id="about-title"
+              className="font-title-signature text-[clamp(1.8rem,3.5vw,2.5rem)] tracking-[0.1em] uppercase text-white mb-8"
+            >
+              Gerdy Abelard
+            </h2>
+
+            <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
+              <p>
+                I've spent my career working across different
+                disciplines—ventures, technology, film, photography, fitness,
+                and writing.
+              </p>
+              <p>
+                I didn't set out to collect titles. Most of it developed
+                through the work itself. Fitness led to years of training,
+                bodybuilding, and modeling. Photography grew into film,
+                editing, directing, and production. Building businesses led
+                me deeper into products and technology, where I began
+                developing software and working through the technical side
+                of bringing ideas to life.
+              </p>
+              <p>I still work across all of these areas today.</p>
+              <p>
+                What I've learned in one discipline often becomes useful in
+                another. My experience in fitness influences products I
+                build. Photography influences how I direct. Writing
+                influences how I develop stories. Business changes how I
+                think about whether an idea can actually work. Technology
+                gives me another way to build and solve problems.
+              </p>
+              <p>
+                I don't try to fit all of that into one title. Titles are
+                useful for describing the role I'm performing at the time.
+                The work is the larger picture.
+              </p>
+            </div>
+
+            <div className="w-full h-px bg-[#1a1a1a] my-8" aria-hidden="true" />
+
+            <div className="flex flex-col gap-[0.35rem]">
+              <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
+                Based in Los Angeles
+              </p>
+              <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
+                New York / Atlanta / Boston / Dallas / Lagos / Nairobi
+              </p>
             </div>
           </div>
         </div>
