@@ -210,14 +210,14 @@
 }
 
 .word-abelard {
-  font-size: clamp(2rem, 5.8vw, 5.8rem);
+  font-size: clamp(2.6rem, 7.5vw, 7.5rem);
   font-weight: 900;
   letter-spacing: -0.025em;
   line-height: 1;
   color: #ffffff;
   font-variation-settings: "opsz" 96, "wght" 900;
-  margin-left: -0.03em; /* Tightly locked to 'Y' of GERDY */
-  transform: translateY(0.1em); /* Tucked baseline offset directly after 'Y' */
+  margin-left: -0.15em;
+  transform: translateY(-0.35em);
   display: inline-block;
 }
 

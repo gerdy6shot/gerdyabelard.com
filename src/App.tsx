@@ -201,7 +201,7 @@ export default function App() {
         }`}
       >
         {/* Permanent Fixed Navigation Header */}
-        <header className="fixed top-0 left-0 w-full z-1000 box-border px-6 md:px-10 py-5 md:py-6 flex flex-row justify-between items-center gap-4 bg-black">
+        <header className="fixed top-0 left-0 w-full z-1000 pointer-events-none box-border px-6 md:px-10 py-5 md:py-6 flex flex-row justify-between items-center gap-4 bg-black">
           <button
             type="button"
             onClick={() => {
@@ -210,14 +210,14 @@ export default function App() {
                 behavior: "smooth",
               });
             }}
-            className="font-title-signature text-sm sm:text-base md:text-lg uppercase tracking-[0.25em] font-semibold text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
+            className="pointer-events-auto font-title-signature text-sm sm:text-base md:text-lg uppercase tracking-[0.25em] font-semibold text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
             aria-label="Return to top"
           >
             GERDY ABELARD
           </button>
 
           <nav
-            className="flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
+            className="pointer-events-auto flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
             aria-label="Main navigation"
           >
             <button
@@ -313,7 +313,7 @@ export default function App() {
       {/* Cinematic Modal Window */}
       {activeProject && (
         <div
-          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex flex-col justify-center items-center p-4 sm:p-8 md:p-14"
+          className="fixed inset-0 z-1100 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center p-4 sm:p-8 md:p-14"
           onClick={closeProject}
           role="dialog"
           aria-modal="true"
@@ -386,7 +386,7 @@ export default function App() {
       {/* Full-Screen Contact Overlay */}
       {showContact && (
         <div
-          className="fixed inset-0 z-[110] bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center p-6 text-center"
+          className="fixed inset-0 z-1110 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center p-6 text-center"
           onClick={closeContact}
           role="dialog"
           aria-modal="true"
