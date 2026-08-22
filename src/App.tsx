@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
 
 interface ProjectItem {
   id: string;
@@ -87,13 +88,101 @@ const portfolioData: ProjectItem[] = [
   },
 ];
 
-export default function App() {
-  const [entered, setEntered] = useState(false);
-  const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
-  const [showContact, setShowContact] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
-  const [activeTiles, setActiveTiles] = useState<Set<string>>(new Set());
+/* Persistent header — rendered on every page, every link performs real navigation */
+function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const goToWork = () => {
+    if (location.pathname === "/") {
+      document.getElementById("work")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    } else {
+      navigate("/");
+    }
+  };
+
+  const goHome = () => {
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <header className="fixed top-0 left-0 w-full z-1000 pointer-events-none box-border px-6 md:px-10 py-5 md:py-6 flex flex-row justify-between items-center gap-4 bg-black">
+      <Link
+        to="/"
+        onClick={goHome}
+        className="pointer-events-auto font-title-signature text-sm sm:text-base md:text-lg uppercase tracking-[0.25em] font-semibold text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
+        aria-label="Return home"
+      >
+        GERDY ABELARD
+      </Link>
+
+      <nav
+        className="pointer-events-auto flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
+        aria-label="Main navigation"
+      >
+        <button
+          type="button"
+          onClick={goToWork}
+          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+        >
+          FILM
+        </button>
+
+        <span className="text-white/30 font-light" aria-hidden="true">
+          |
+        </span>
+
+        <button
+          type="button"
+          onClick={goToWork}
+          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+        >
+          VENTURES
+        </button>
+
+        <span className="text-white/30 font-light" aria-hidden="true">
+          |
+        </span>
+
+        <Link
+          to="/about"
+          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+        >
+          ABOUT
+        </Link>
+
+        <span className="text-white/30 font-light" aria-hidden="true">
+          |
+        </span>
+
+        <span className="lowercase italic font-normal tracking-normal text-white/50">
+          {"{archive}"}
+        </span>
+
+        <span className="text-white/30 font-light" aria-hidden="true">
+          |
+        </span>
+
+        <Link
+          to="/contact"
+          className="text-white hover:text-[#8b1e1e] cursor-pointer transition-colors uppercase ml-1 focus:outline-none"
+        >
+          Contact
+        </Link>
+      </nav>
+    </header>
+  );
+}
+
+/* Home — the project grid, footer, and the project detail modal */
+function HomePage() {
+  const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
+  const [activeTiles, setActiveTiles] = useState<Set<string>>(new Set());
   const lastFocusedElement = useRef<HTMLElement | null>(null);
 
   const openProject = (
@@ -121,46 +210,12 @@ export default function App() {
     }, 0);
   };
 
-  const openContact = (event: React.MouseEvent<HTMLButtonElement>) => {
-    lastFocusedElement.current = event.currentTarget;
-    setShowContact(true);
-  };
-
-  const closeContact = () => {
-    setShowContact(false);
-
-    window.setTimeout(() => {
-      lastFocusedElement.current?.focus();
-    }, 0);
-  };
-
-  const openAbout = (event: React.MouseEvent<HTMLButtonElement>) => {
-    lastFocusedElement.current = event.currentTarget;
-    setShowAbout(true);
-  };
-
-  const closeAbout = () => {
-    setShowAbout(false);
-
-    window.setTimeout(() => {
-      lastFocusedElement.current?.focus();
-    }, 0);
-  };
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
 
       if (activeProject) {
         closeProject();
-      }
-
-      if (showContact) {
-        closeContact();
-      }
-
-      if (showAbout) {
-        closeAbout();
       }
     };
 
@@ -169,194 +224,71 @@ export default function App() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeProject, showContact, showAbout]);
+  }, [activeProject]);
 
   useEffect(() => {
-    const isOverlayOpen = activeProject !== null || showContact || showAbout;
-
-    document.body.style.overflow = isOverlayOpen ? "hidden" : "";
+    document.body.style.overflow = activeProject !== null ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [activeProject, showContact, showAbout]);
-
-  const enterSite = () => {
-    setEntered(true);
-    window.scrollTo({ top: 0, behavior: "instant" });
-  };
-
-  const scrollToWork = () => {
-    document.getElementById("work")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
+  }, [activeProject]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#f0f0f0] font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#8b1e1e] selection:text-white relative overflow-x-hidden">
-      {/* 35mm Subtle Film Grain */}
-      <div
-        className="fixed inset-0 pointer-events-none z-50 opacity-[0.035]"
-        aria-hidden="true"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      />
-
-      {/* Pure Black Editorial Intro Screen */}
-      <button
-        type="button"
-        onClick={enterSite}
-        aria-label="Enter Gerdy Abelard portfolio"
-        aria-hidden={entered}
-        tabIndex={entered ? -1 : 0}
-        className={`fixed inset-0 z-[60] w-full h-full bg-[#000000] flex justify-center items-center focus:outline-none transition-all duration-1000 ease-out ${
-          entered
-            ? "opacity-0 scale-110 pointer-events-none"
-            : "opacity-100 scale-100 cursor-pointer"
-        }`}
+    <>
+      {/* 2-Column Borderless Grid with Center Hover Reveals */}
+      <main
+        id="work"
+        className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-[#000000] pt-19 md:pt-23"
       >
-        <span className="wordmark-wrapper hover:opacity-75 transition-opacity duration-700">
-          <span className="word-gerdy">GERDY</span>
-          <span className="word-abelard">ABELARD</span>
-        </span>
-      </button>
-
-      {/* Main Exhibition Experience */}
-      <div
-        className={`transition-opacity duration-1000 ${
-          entered ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Permanent Fixed Navigation Header */}
-        <header className="fixed top-0 left-0 w-full z-1000 pointer-events-none box-border px-6 md:px-10 py-5 md:py-6 flex flex-row justify-between items-center gap-4 bg-black">
+        {portfolioData.map((item) => (
           <button
+            key={item.id}
             type="button"
-            onClick={() => {
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
+            onClick={(event) => {
+              if (!item.isBlackAndWhite) {
+                lockActiveTile(item.id);
+              }
+              openProject(item, event);
             }}
-            className="pointer-events-auto font-title-signature text-sm sm:text-base md:text-lg uppercase tracking-[0.25em] font-semibold text-white cursor-pointer select-none text-left hover:text-white/75 transition-colors focus:outline-none"
-            aria-label="Return to top"
+            className={`grid-tile relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset ${
+              activeTiles.has(item.id) ? "is-active" : ""
+            } ${item.isBlackAndWhite ? "is-mono" : ""}`}
+            aria-label={`View ${item.title} project details`}
           >
-            GERDY ABELARD
+            <img
+              src={item.image}
+              alt={`${item.title} — ${item.subtitle}`}
+              loading={item.id === "01" ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={item.id === "01" ? "high" : "auto"}
+              className="grid-tile-image w-full h-full object-cover"
+            />
+
+            {/* Deep shadow falloff — cinematic vignette */}
+            <div
+              className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.6)_100%)]"
+              aria-hidden="true"
+            />
+
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 bg-black/40 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-400 ease-out">
+              <h2 className="font-['GFS_Didot',serif] text-2xl sm:text-3xl md:text-4xl text-white font-normal uppercase tracking-wide leading-tight drop-shadow-lg">
+                {item.title}
+              </h2>
+
+              <p className="mt-3 font-['GFS_Didot',serif] italic text-sm sm:text-base text-white/80 max-w-md font-light">
+                {item.subtitle}
+              </p>
+            </div>
           </button>
+        ))}
+      </main>
 
-          <nav
-            className="pointer-events-auto flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
-            aria-label="Main navigation"
-          >
-            <button
-              type="button"
-              onClick={scrollToWork}
-              className="hover:text-white cursor-pointer transition-colors focus:outline-none"
-            >
-              FILM
-            </button>
-
-            <span className="text-white/30 font-light" aria-hidden="true">
-              |
-            </span>
-
-            <button
-              type="button"
-              onClick={scrollToWork}
-              className="hover:text-white cursor-pointer transition-colors focus:outline-none"
-            >
-              VENTURES
-            </button>
-
-            <span className="text-white/30 font-light" aria-hidden="true">
-              |
-            </span>
-
-            <button
-              type="button"
-              onClick={openAbout}
-              className="hover:text-white cursor-pointer transition-colors focus:outline-none"
-            >
-              ABOUT
-            </button>
-
-            <span className="text-white/30 font-light" aria-hidden="true">
-              |
-            </span>
-
-            <span className="lowercase italic font-normal tracking-normal text-white/50">
-              {"{archive}"}
-            </span>
-
-            <span className="text-white/30 font-light" aria-hidden="true">
-              |
-            </span>
-
-            <button
-              type="button"
-              onClick={openContact}
-              className="text-white hover:text-[#8b1e1e] cursor-pointer transition-colors uppercase ml-1 focus:outline-none"
-            >
-              Contact
-            </button>
-          </nav>
-        </header>
-
-        {/* 2-Column Borderless Grid with Center Hover Reveals */}
-        <main
-          id="work"
-          className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-[#000000] pt-19 md:pt-23"
-        >
-          {portfolioData.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={(event) => {
-                if (!item.isBlackAndWhite) {
-                  lockActiveTile(item.id);
-                }
-                openProject(item, event);
-              }}
-              className={`grid-tile relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset ${
-                activeTiles.has(item.id) ? "is-active" : ""
-              } ${item.isBlackAndWhite ? "is-mono" : ""}`}
-              aria-label={`View ${item.title} project details`}
-            >
-              <img
-                src={item.image}
-                alt={`${item.title} — ${item.subtitle}`}
-                loading={item.id === "01" ? "eager" : "lazy"}
-                decoding="async"
-                fetchPriority={item.id === "01" ? "high" : "auto"}
-                className="grid-tile-image w-full h-full object-cover"
-              />
-
-              {/* Deep shadow falloff — cinematic vignette */}
-              <div
-                className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.6)_100%)]"
-                aria-hidden="true"
-              />
-
-              <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 bg-black/40 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-400 ease-out">
-                <h2 className="font-['GFS_Didot',serif] text-2xl sm:text-3xl md:text-4xl text-white font-normal uppercase tracking-wide leading-tight drop-shadow-lg">
-                  {item.title}
-                </h2>
-
-                <p className="mt-3 font-['GFS_Didot',serif] italic text-sm sm:text-base text-white/80 max-w-md font-light">
-                  {item.subtitle}
-                </p>
-              </div>
-            </button>
-          ))}
-        </main>
-
-        {/* Footer */}
-        <footer className="px-6 md:px-12 py-12 flex justify-between items-center text-[10px] uppercase tracking-[0.25em] font-light text-white/30 border-t border-white/5">
-          <span>© Gerdy Abelard</span>
-          <span>I build things for the real world</span>
-        </footer>
-      </div>
+      {/* Footer */}
+      <footer className="px-6 md:px-12 py-12 flex justify-between items-center text-[10px] uppercase tracking-[0.25em] font-light text-white/30 border-t border-white/5">
+        <span>© Gerdy Abelard</span>
+        <span>I build things for the real world</span>
+      </footer>
 
       {/* Cinematic Modal Window */}
       {activeProject && (
@@ -430,196 +362,214 @@ export default function App() {
           </div>
         </div>
       )}
+    </>
+  );
+}
 
-      {/* Full-Screen Contact Overlay */}
-      {showContact && (
+/* About — its own page at /about */
+function AboutPage() {
+  return (
+    <div className="relative w-full min-h-screen">
+      {/* Portrait — large environmental layer emerging from the black background */}
+      <div
+        className="hidden md:block absolute inset-y-0 right-0 w-[48%] max-w-220 overflow-hidden pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <img
+          src="/images/gerdy_portrait.png"
+          alt=""
+          className="w-full h-full object-cover object-[78%_38%] grayscale contrast-90 brightness-105"
+        />
+        {/* Wide soft fade — left edge blends into black */}
         <div
-          className="fixed inset-0 z-1110 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center p-6 text-center"
-          onClick={closeContact}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="contact-title"
-        >
-          <button
-            type="button"
-            onClick={closeContact}
-            aria-label="Close contact panel"
-            className="absolute top-6 right-6 sm:top-10 sm:right-10 text-white/70 hover:text-white font-['GFS_Didot',serif] text-2xl sm:text-3xl font-light leading-none transition-colors cursor-pointer focus:outline-none"
-          >
-            ×
-          </button>
-
-          <div
-            className="max-w-2xl w-full flex flex-col items-center gap-8 text-white font-['GFS_Didot',serif]"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div>
-              <p
-                id="contact-title"
-                className="text-sm uppercase tracking-widest text-white/50 mb-2 font-normal"
-              >
-                (e) Direct Inquiries
-              </p>
-
-              <a
-                href="mailto:contact@gerdyabelard.com"
-                className="text-2xl sm:text-3xl md:text-4xl text-white hover:text-[#8b1e1e] transition-colors lowercase tracking-normal"
-              >
-                contact@gerdyabelard.com
-              </a>
-            </div>
-
-            <div className="w-12 h-px bg-white/20 my-2" aria-hidden="true" />
-
-            <div>
-              <p className="text-xs sm:text-sm uppercase tracking-[0.15em] text-white/60 mb-2">
-                FOR COMMERCIAL & DIRECTING INQUIRIES:
-              </p>
-
-              <p className="text-base sm:text-lg text-white/90">
-                COMVIEWMEDIA STUDIO
-              </p>
-
-              <a
-                href="mailto:contact@comviewmedia.com"
-                className="text-sm sm:text-base text-white/70 hover:text-white transition-colors lowercase italic"
-              >
-                contact@comviewmedia.com
-              </a>
-            </div>
-
-            <div>
-              <p className="text-xs sm:text-sm uppercase tracking-[0.15em] text-white/60 mb-2">
-                VENTURE ARCHITECTURE & PARTNERSHIPS:
-              </p>
-
-              <a
-                href="mailto:contact@gerdyabelard.com"
-                className="text-sm sm:text-base text-white/70 hover:text-white transition-colors lowercase italic"
-              >
-                contact@gerdyabelard.com
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Full-Screen About Overlay */}
-      {showAbout && (
+          className="absolute inset-y-0 left-0 w-[42%] bg-linear-to-r from-black via-black/75 to-transparent"
+          aria-hidden="true"
+        />
+        {/* Soft fade — top edge */}
         <div
-          className="fixed inset-0 z-1120 bg-black/95 backdrop-blur-lg overflow-y-auto"
-          onClick={closeAbout}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="about-title"
-        >
-          <button
-            type="button"
-            onClick={closeAbout}
-            aria-label="Close about panel"
-            className="fixed top-6 right-6 sm:top-10 sm:right-10 z-20 text-white/70 hover:text-white font-title-signature text-2xl sm:text-3xl font-light leading-none transition-colors cursor-pointer focus:outline-none"
-          >
-            ×
-          </button>
+          className="absolute inset-x-0 top-0 h-[10%] bg-linear-to-b from-black to-transparent"
+          aria-hidden="true"
+        />
+        {/* Soft fade — bottom edge */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[10%] bg-linear-to-t from-black to-transparent"
+          aria-hidden="true"
+        />
+      </div>
 
-          <div className="relative w-full min-h-screen">
-            {/* Portrait — large environmental layer emerging from the black background */}
-            <div
-              className="hidden md:block absolute inset-y-0 right-0 w-[48%] max-w-220 overflow-hidden pointer-events-none select-none"
-              aria-hidden="true"
-            >
-              <img
-                src="/images/gerdy_portrait.png"
-                alt=""
-                className="w-full h-full object-cover object-[78%_38%] grayscale contrast-90 brightness-105"
-              />
-              {/* Wide soft fade — left edge blends into black */}
-              <div
-                className="absolute inset-y-0 left-0 w-[42%] bg-linear-to-r from-black via-black/75 to-transparent"
-                aria-hidden="true"
-              />
-              {/* Soft fade — top edge */}
-              <div
-                className="absolute inset-x-0 top-0 h-[10%] bg-linear-to-b from-black to-transparent"
-                aria-hidden="true"
-              />
-              {/* Soft fade — bottom edge */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-[10%] bg-linear-to-t from-black to-transparent"
-                aria-hidden="true"
-              />
-            </div>
+      <div className="relative z-10 w-full md:w-[54%] md:max-w-155 px-6 sm:px-10 md:pl-16 lg:pl-24 md:pr-6 pt-32 pb-20 md:pt-36 md:pb-24 text-left">
+        <p className="font-title-signature text-[0.85rem] tracking-[0.2em] uppercase text-[#8b1e1e] mb-2">
+          About
+        </p>
 
-            <div
-              className="relative z-10 w-full md:w-[54%] md:max-w-155 px-6 sm:px-10 md:pl-16 lg:pl-24 md:pr-6 py-20 md:py-24 text-left"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <p className="font-title-signature text-[0.85rem] tracking-[0.2em] uppercase text-[#8b1e1e] mb-2">
-                About
-              </p>
+        <h2 className="font-title-signature text-[clamp(1.8rem,3.5vw,2.5rem)] tracking-widest uppercase text-white mb-8">
+          Gerdy Abelard
+        </h2>
 
-              <h2
-                id="about-title"
-                className="font-title-signature text-[clamp(1.8rem,3.5vw,2.5rem)] tracking-widest uppercase text-white mb-8"
-              >
-                Gerdy Abelard
-              </h2>
-
-              <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
-                <p>
-                  I've spent my career working across different
-                  disciplines—ventures, technology, film, photography,
-                  fitness, and writing.
-                </p>
-                <p>
-                  I didn't set out to collect titles. Most of it developed
-                  through the work itself. Fitness led to years of training,
-                  bodybuilding, and modeling. Photography grew into film,
-                  editing, directing, and production. Building businesses led
-                  me deeper into products and technology, where I began
-                  developing software and working through the technical side
-                  of bringing ideas to life.
-                </p>
-                <p>I still work across all of these areas today.</p>
-                <p>
-                  What I've learned in one discipline often becomes useful in
-                  another. My experience in fitness influences products I
-                  build. Photography influences how I direct. Writing
-                  influences how I develop stories. Business changes how I
-                  think about whether an idea can actually work. Technology
-                  gives me another way to build and solve problems.
-                </p>
-                <p>
-                  I don't try to fit all of that into one title. Titles are
-                  useful for describing the role I'm performing at the time.
-                  The work is the larger picture.
-                </p>
-              </div>
-
-              <div
-                className="w-full h-px bg-[#1a1a1a] my-8"
-                aria-hidden="true"
-              />
-
-              <div className="flex flex-col gap-[0.35rem]">
-                <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
-                  Based in Los Angeles
-                </p>
-                <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
-                  New York / Atlanta / Boston / Dallas / Lagos / Nairobi
-                </p>
-              </div>
-
-              {/* Portrait — mobile only, inline below the text */}
-              <img
-                src="/images/gerdy_portrait.png"
-                alt="Gerdy Abelard portrait"
-                className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-90 brightness-105"
-              />
-            </div>
-          </div>
+        <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
+          <p>
+            I've spent my career working across different
+            disciplines—ventures, technology, film, photography, fitness,
+            and writing.
+          </p>
+          <p>
+            I didn't set out to collect titles. Most of it developed through
+            the work itself. Fitness led to years of training, bodybuilding,
+            and modeling. Photography grew into film, editing, directing,
+            and production. Building businesses led me deeper into products
+            and technology, where I began developing software and working
+            through the technical side of bringing ideas to life.
+          </p>
+          <p>I still work across all of these areas today.</p>
+          <p>
+            What I've learned in one discipline often becomes useful in
+            another. My experience in fitness influences products I build.
+            Photography influences how I direct. Writing influences how I
+            develop stories. Business changes how I think about whether an
+            idea can actually work. Technology gives me another way to build
+            and solve problems.
+          </p>
+          <p>
+            I don't try to fit all of that into one title. Titles are
+            useful for describing the role I'm performing at the time. The
+            work is the larger picture.
+          </p>
         </div>
-      )}
+
+        <div className="w-full h-px bg-[#1a1a1a] my-8" aria-hidden="true" />
+
+        <div className="flex flex-col gap-[0.35rem]">
+          <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
+            Based in Los Angeles
+          </p>
+          <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
+            New York / Atlanta / Boston / Dallas / Lagos / Nairobi
+          </p>
+        </div>
+
+        {/* Portrait — mobile only, inline below the text */}
+        <img
+          src="/images/gerdy_portrait.png"
+          alt="Gerdy Abelard portrait"
+          className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-90 brightness-105"
+        />
+      </div>
+    </div>
+  );
+}
+
+/* Contact — its own page at /contact */
+function ContactPage() {
+  return (
+    <div className="w-full min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-20 md:pt-24 text-center">
+      <div className="max-w-2xl w-full flex flex-col items-center gap-8 text-white font-['GFS_Didot',serif]">
+        <div>
+          <p className="text-sm uppercase tracking-widest text-white/50 mb-2 font-normal">
+            (e) Direct Inquiries
+          </p>
+
+          <a
+            href="mailto:contact@gerdyabelard.com"
+            className="text-2xl sm:text-3xl md:text-4xl text-white hover:text-[#8b1e1e] transition-colors lowercase tracking-normal"
+          >
+            contact@gerdyabelard.com
+          </a>
+        </div>
+
+        <div className="w-12 h-px bg-white/20 my-2" aria-hidden="true" />
+
+        <div>
+          <p className="text-xs sm:text-sm uppercase tracking-[0.15em] text-white/60 mb-2">
+            FOR COMMERCIAL & DIRECTING INQUIRIES:
+          </p>
+
+          <p className="text-base sm:text-lg text-white/90">
+            COMVIEWMEDIA STUDIO
+          </p>
+
+          <a
+            href="mailto:contact@comviewmedia.com"
+            className="text-sm sm:text-base text-white/70 hover:text-white transition-colors lowercase italic"
+          >
+            contact@comviewmedia.com
+          </a>
+        </div>
+
+        <div>
+          <p className="text-xs sm:text-sm uppercase tracking-[0.15em] text-white/60 mb-2">
+            VENTURE ARCHITECTURE & PARTNERSHIPS:
+          </p>
+
+          <a
+            href="mailto:contact@gerdyabelard.com"
+            className="text-sm sm:text-base text-white/70 hover:text-white transition-colors lowercase italic"
+          >
+            contact@gerdyabelard.com
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const [entered, setEntered] = useState(false);
+  const location = useLocation();
+
+  // Reset scroll position on every real page navigation
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location.pathname]);
+
+  const enterSite = () => {
+    setEntered(true);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  return (
+    <div className="min-h-screen bg-[#000000] text-[#f0f0f0] font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#8b1e1e] selection:text-white relative overflow-x-hidden">
+      {/* 35mm Subtle Film Grain */}
+      <div
+        className="fixed inset-0 pointer-events-none z-50 opacity-[0.035]"
+        aria-hidden="true"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Pure Black Editorial Intro Screen */}
+      <button
+        type="button"
+        onClick={enterSite}
+        aria-label="Enter Gerdy Abelard portfolio"
+        aria-hidden={entered}
+        tabIndex={entered ? -1 : 0}
+        className={`fixed inset-0 z-[60] w-full h-full bg-[#000000] flex justify-center items-center focus:outline-none transition-all duration-1000 ease-out ${
+          entered
+            ? "opacity-0 scale-110 pointer-events-none"
+            : "opacity-100 scale-100 cursor-pointer"
+        }`}
+      >
+        <span className="wordmark-wrapper hover:opacity-75 transition-opacity duration-700">
+          <span className="word-gerdy">GERDY</span>
+          <span className="word-abelard">ABELARD</span>
+        </span>
+      </button>
+
+      {/* Main Exhibition Experience — header persists across every route */}
+      <div
+        className={`transition-opacity duration-1000 ${
+          entered ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <Header />
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
