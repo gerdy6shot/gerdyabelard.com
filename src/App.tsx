@@ -90,6 +90,7 @@ export default function App() {
   const [entered, setEntered] = useState(false);
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
   const [showContact, setShowContact] = useState(false);
+  const [activeTiles, setActiveTiles] = useState<Set<string>>(new Set());
 
   const lastFocusedElement = useRef<HTMLElement | null>(null);
 
@@ -99,6 +100,18 @@ export default function App() {
   ) => {
     lastFocusedElement.current = event.currentTarget;
     setActiveProject(project);
+  };
+
+  const toggleActiveTile = (id: string) => {
+    setActiveTiles((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   const closeProject = () => {
@@ -271,8 +284,13 @@ export default function App() {
             <button
               key={item.id}
               type="button"
-              onClick={(event) => openProject(item, event)}
-              className="relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset"
+              onClick={(event) => {
+                toggleActiveTile(item.id);
+                openProject(item, event);
+              }}
+              className={`grid-tile relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset ${
+                activeTiles.has(item.id) ? "is-active" : ""
+              }`}
               aria-label={`View ${item.title} project details`}
             >
               <img
@@ -281,7 +299,7 @@ export default function App() {
                 loading={item.id === "01" ? "eager" : "lazy"}
                 decoding="async"
                 fetchPriority={item.id === "01" ? "high" : "auto"}
-                className="w-full h-full object-cover grayscale contrast-125 brightness-[0.9] group-hover:brightness-50 group-hover:scale-[1.01] transition-all duration-500 ease-out"
+                className="grid-tile-image w-full h-full object-cover"
               />
 
               {/* Deep shadow falloff — cinematic vignette */}

@@ -221,6 +221,19 @@
   display: inline-block;
 }
 
+/* Grid Tile Color Reveal */
+.grid-tile-image {
+  filter: grayscale(100%) contrast(110%);
+  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, transform;
+}
+
+.grid-tile:hover .grid-tile-image,
+.grid-tile.is-active .grid-tile-image {
+  filter: grayscale(0%) contrast(100%) saturate(105%);
+  transform: scale(1.01);
+}
+
 .font-serif-display {
   font-family: var(--font-serif);
 }
