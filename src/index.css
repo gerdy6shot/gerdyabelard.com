@@ -230,7 +230,14 @@
 
 .grid-tile:hover .grid-tile-image,
 .grid-tile.is-active .grid-tile-image {
-  filter: grayscale(0%) contrast(100%) saturate(105%);
+  filter: grayscale(0%) saturate(105%);
+  transform: scale(1.01);
+}
+
+/* Intentional black-and-white assets never colorize, on hover or once clicked */
+.grid-tile.is-mono:hover .grid-tile-image,
+.grid-tile.is-mono.is-active .grid-tile-image {
+  filter: grayscale(100%) contrast(110%);
   transform: scale(1.01);
 }
 

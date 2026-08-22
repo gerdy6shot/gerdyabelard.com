@@ -9,6 +9,7 @@ interface ProjectItem {
   image: string;
   link?: string;
   linkText?: string;
+  isBlackAndWhite?: boolean;
 }
 
 const portfolioData: ProjectItem[] = [
@@ -102,14 +103,11 @@ export default function App() {
     setActiveProject(project);
   };
 
-  const toggleActiveTile = (id: string) => {
+  const lockActiveTile = (id: string) => {
     setActiveTiles((prev) => {
+      if (prev.has(id)) return prev;
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      next.add(id);
       return next;
     });
   };
@@ -285,12 +283,14 @@ export default function App() {
               key={item.id}
               type="button"
               onClick={(event) => {
-                toggleActiveTile(item.id);
+                if (!item.isBlackAndWhite) {
+                  lockActiveTile(item.id);
+                }
                 openProject(item, event);
               }}
               className={`grid-tile relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset ${
                 activeTiles.has(item.id) ? "is-active" : ""
-              }`}
+              } ${item.isBlackAndWhite ? "is-mono" : ""}`}
               aria-label={`View ${item.title} project details`}
             >
               <img
