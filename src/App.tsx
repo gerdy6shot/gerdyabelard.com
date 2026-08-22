@@ -507,7 +507,7 @@ export default function App() {
       {/* Full-Screen About Overlay */}
       {showAbout && (
         <div
-          className="fixed inset-0 z-1120 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center p-6 overflow-y-auto"
+          className="fixed inset-0 z-1120 bg-black/95 backdrop-blur-lg overflow-y-auto"
           onClick={closeAbout}
           role="dialog"
           aria-modal="true"
@@ -517,81 +517,105 @@ export default function App() {
             type="button"
             onClick={closeAbout}
             aria-label="Close about panel"
-            className="absolute top-6 right-6 sm:top-10 sm:right-10 text-white/70 hover:text-white font-title-signature text-2xl sm:text-3xl font-light leading-none transition-colors cursor-pointer focus:outline-none"
+            className="fixed top-6 right-6 sm:top-10 sm:right-10 z-20 text-white/70 hover:text-white font-title-signature text-2xl sm:text-3xl font-light leading-none transition-colors cursor-pointer focus:outline-none"
           >
             ×
           </button>
 
-          <div
-            className="max-w-[1060px] w-full"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-16 items-start">
-              <div className="order-2 md:order-1 text-left">
-                <p className="font-title-signature text-[0.85rem] tracking-[0.2em] uppercase text-[#8b1e1e] mb-2">
-                  About
+          <div className="relative w-full min-h-screen">
+            {/* Portrait — large environmental layer emerging from the black background */}
+            <div
+              className="hidden md:block absolute inset-y-0 right-0 w-[48%] max-w-220 overflow-hidden pointer-events-none select-none"
+              aria-hidden="true"
+            >
+              <img
+                src="/images/about%20iamge.png"
+                alt=""
+                className="w-full h-full object-cover object-[78%_38%] grayscale contrast-90 brightness-105"
+              />
+              {/* Wide soft fade — left edge blends into black */}
+              <div
+                className="absolute inset-y-0 left-0 w-[42%] bg-linear-to-r from-black via-black/75 to-transparent"
+                aria-hidden="true"
+              />
+              {/* Soft fade — top edge */}
+              <div
+                className="absolute inset-x-0 top-0 h-[10%] bg-linear-to-b from-black to-transparent"
+                aria-hidden="true"
+              />
+              {/* Soft fade — bottom edge */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[10%] bg-linear-to-t from-black to-transparent"
+                aria-hidden="true"
+              />
+            </div>
+
+            <div
+              className="relative z-10 w-full md:w-[54%] md:max-w-155 px-6 sm:px-10 md:pl-16 lg:pl-24 md:pr-6 py-20 md:py-24 text-left"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p className="font-title-signature text-[0.85rem] tracking-[0.2em] uppercase text-[#8b1e1e] mb-2">
+                About
+              </p>
+
+              <h2
+                id="about-title"
+                className="font-title-signature text-[clamp(1.8rem,3.5vw,2.5rem)] tracking-widest uppercase text-white mb-8"
+              >
+                Gerdy Abelard
+              </h2>
+
+              <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
+                <p>
+                  I've spent my career working across different
+                  disciplines—ventures, technology, film, photography,
+                  fitness, and writing.
                 </p>
-
-                <h2
-                  id="about-title"
-                  className="font-title-signature text-[clamp(1.8rem,3.5vw,2.5rem)] tracking-[0.1em] uppercase text-white mb-8"
-                >
-                  Gerdy Abelard
-                </h2>
-
-                <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
-                  <p>
-                    I've spent my career working across different
-                    disciplines—ventures, technology, film, photography,
-                    fitness, and writing.
-                  </p>
-                  <p>
-                    I didn't set out to collect titles. Most of it developed
-                    through the work itself. Fitness led to years of
-                    training, bodybuilding, and modeling. Photography grew
-                    into film, editing, directing, and production. Building
-                    businesses led me deeper into products and technology,
-                    where I began developing software and working through
-                    the technical side of bringing ideas to life.
-                  </p>
-                  <p>I still work across all of these areas today.</p>
-                  <p>
-                    What I've learned in one discipline often becomes useful
-                    in another. My experience in fitness influences products
-                    I build. Photography influences how I direct. Writing
-                    influences how I develop stories. Business changes how I
-                    think about whether an idea can actually work. Technology
-                    gives me another way to build and solve problems.
-                  </p>
-                  <p>
-                    I don't try to fit all of that into one title. Titles
-                    are useful for describing the role I'm performing at the
-                    time. The work is the larger picture.
-                  </p>
-                </div>
-
-                <div
-                  className="w-full h-px bg-[#1a1a1a] my-8"
-                  aria-hidden="true"
-                />
-
-                <div className="flex flex-col gap-[0.35rem]">
-                  <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
-                    Based in Los Angeles
-                  </p>
-                  <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
-                    New York / Atlanta / Boston / Dallas / Lagos / Nairobi
-                  </p>
-                </div>
+                <p>
+                  I didn't set out to collect titles. Most of it developed
+                  through the work itself. Fitness led to years of training,
+                  bodybuilding, and modeling. Photography grew into film,
+                  editing, directing, and production. Building businesses led
+                  me deeper into products and technology, where I began
+                  developing software and working through the technical side
+                  of bringing ideas to life.
+                </p>
+                <p>I still work across all of these areas today.</p>
+                <p>
+                  What I've learned in one discipline often becomes useful in
+                  another. My experience in fitness influences products I
+                  build. Photography influences how I direct. Writing
+                  influences how I develop stories. Business changes how I
+                  think about whether an idea can actually work. Technology
+                  gives me another way to build and solve problems.
+                </p>
+                <p>
+                  I don't try to fit all of that into one title. Titles are
+                  useful for describing the role I'm performing at the time.
+                  The work is the larger picture.
+                </p>
               </div>
 
-              <div className="order-1 md:order-2 w-full max-w-[400px] md:max-w-none mx-auto md:mx-0 md:sticky md:top-8 border border-white/10 bg-[#080809] overflow-hidden">
-                <img
-                  src="/images/about%20iamge.png"
-                  alt="Gerdy Abelard portrait"
-                  className="w-full h-full aspect-[4/5] object-cover grayscale contrast-125"
-                />
+              <div
+                className="w-full h-px bg-[#1a1a1a] my-8"
+                aria-hidden="true"
+              />
+
+              <div className="flex flex-col gap-[0.35rem]">
+                <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
+                  Based in Los Angeles
+                </p>
+                <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
+                  New York / Atlanta / Boston / Dallas / Lagos / Nairobi
+                </p>
               </div>
+
+              {/* Portrait — mobile only, inline below the text */}
+              <img
+                src="/images/about%20iamge.png"
+                alt="Gerdy Abelard portrait"
+                className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-90 brightness-105"
+              />
             </div>
           </div>
         </div>
