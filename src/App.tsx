@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 
 interface ProjectItem {
   id: string;
@@ -13,6 +13,8 @@ interface ProjectItem {
   isBlackAndWhite?: boolean;
 }
 
+type InquiryKind = "mello" | "ophionoir";
+
 const portfolioData: ProjectItem[] = [
   {
     id: "01",
@@ -21,8 +23,7 @@ const portfolioData: ProjectItem[] = [
     role: "FOUNDED & DIRECTED BY GERDY ABELARD",
     description:
       "Motion picture directing, high-contrast cinema optics, and visual narrative systems for commercial and editorial productions.",
-    image:
-      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1800&auto=format&fit=crop",
+    image: "/images/ventures/comviewmedia-og.jpg",
     link: "https://comviewmedia.com",
     linkText: "VISIT COMVIEWMEDIA.COM →",
   },
@@ -33,8 +34,7 @@ const portfolioData: ProjectItem[] = [
     role: "FOUNDED & ARCHITECTED BY GERDY ABELARD",
     description:
       "Physical training architecture, nutritional precision, and performance tracking systems engineered for daily execution and consistency.",
-    image:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1800&auto=format&fit=crop",
+    image: "/images/ventures/overhaultrain-logo.jpeg",
     link: "https://overhaultrain.com",
     linkText: "VISIT OVERHAULTRAIN.COM →",
   },
@@ -45,10 +45,9 @@ const portfolioData: ProjectItem[] = [
     role: "BRAND ARCHITECTURE & DEVELOPMENT",
     description:
       "Ultra-premium agave distillation study, luxury bottle geometry, tactile materials, and disciplined visual prestige.",
-    image:
-      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1800&auto=format&fit=crop",
+    image: "/images/ventures/ophionoir-image.jpg",
     link: "#",
-    linkText: "PRIVATE ARCHIVE",
+    linkText: "PRIVATE DEVELOPMENT",
   },
   {
     id: "04",
@@ -57,8 +56,7 @@ const portfolioData: ProjectItem[] = [
     role: "PRODUCT ARCHITECTURE",
     description:
       "Scalable consumer goods infrastructure, bespoke label design, and logistics packaging systems.",
-    image:
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=1800&auto=format&fit=crop",
+    image: "/images/ventures/mello-minis-logo.png",
     link: "#",
     linkText: "IN DEVELOPMENT",
   },
@@ -69,10 +67,9 @@ const portfolioData: ProjectItem[] = [
     role: "BRAND ARCHITECTURE",
     description:
       "Heritage-driven botanical spirits, cultural storytelling, and origin-focused distillation identity.",
-    image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1800&auto=format&fit=crop",
-    link: "#",
-    linkText: "IN DEVELOPMENT",
+    image: "/images/ventures/roce-de-libertad.jpeg",
+    link: "https://rocedelibertad.com",
+    linkText: "VISIT ROCE DE LIBERTAD.COM →",
   },
   {
     id: "06",
@@ -81,8 +78,7 @@ const portfolioData: ProjectItem[] = [
     role: "RESEARCH & DIRECTION",
     description:
       "Field studies on vintage lens rendering, optical micro-contrast, 3D character, and cinema color palettes.",
-    image:
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1800&auto=format&fit=crop",
+    image: "/images/comviewmedia/11C1F314-7D4D-4397-B885-7322031B62A2.JPEG",
     link: "#",
     linkText: "VIEW FIELD NOTES",
   },
@@ -90,19 +86,7 @@ const portfolioData: ProjectItem[] = [
 
 /* Persistent header — rendered on every page, every link performs real navigation */
 function Header() {
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const goToWork = () => {
-    if (location.pathname === "/") {
-      document.getElementById("work")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    } else {
-      navigate("/");
-    }
-  };
 
   const goHome = () => {
     if (location.pathname === "/") {
@@ -122,28 +106,37 @@ function Header() {
       </Link>
 
       <nav
-        className="pointer-events-auto flex items-center gap-2 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none"
+        className="pointer-events-auto flex items-center gap-1 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none overflow-x-auto max-w-[62vw] sm:max-w-none flex-nowrap"
         aria-label="Main navigation"
       >
-        <button
-          type="button"
-          onClick={goToWork}
+        <a
+          href="https://comviewmedia.com/motion"
           className="hover:text-white cursor-pointer transition-colors focus:outline-none"
         >
           FILM
-        </button>
+        </a>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
         </span>
 
-        <button
-          type="button"
-          onClick={goToWork}
+        <a
+          href="https://comviewmedia.com/stills"
+          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+        >
+          PHOTOGRAPHY
+        </a>
+
+        <span className="text-white/30 font-light" aria-hidden="true">
+          |
+        </span>
+
+        <Link
+          to="/ventures"
           className="hover:text-white cursor-pointer transition-colors focus:outline-none"
         >
           VENTURES
-        </button>
+        </Link>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
@@ -160,9 +153,12 @@ function Header() {
           |
         </span>
 
-        <span className="lowercase italic font-normal tracking-normal text-white/50">
+        <a
+          href="https://comviewmedia.com/art-world"
+          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+        >
           {"{archive}"}
-        </span>
+        </a>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
@@ -182,6 +178,9 @@ function Header() {
 /* Home — the project grid, footer, and the project detail modal */
 function HomePage() {
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
+  const [activeInquiry, setActiveInquiry] = useState<InquiryKind | null>(null);
+  const [inquiryEmail, setInquiryEmail] = useState("");
+  const [inquiryMessage, setInquiryMessage] = useState("");
   const [activeTiles, setActiveTiles] = useState<Set<string>>(new Set());
   const lastFocusedElement = useRef<HTMLElement | null>(null);
 
@@ -204,6 +203,9 @@ function HomePage() {
 
   const closeProject = () => {
     setActiveProject(null);
+    setActiveInquiry(null);
+    setInquiryEmail("");
+    setInquiryMessage("");
 
     window.setTimeout(() => {
       lastFocusedElement.current?.focus();
@@ -214,7 +216,7 @@ function HomePage() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
 
-      if (activeProject) {
+      if (activeProject || activeInquiry) {
         closeProject();
       }
     };
@@ -224,18 +226,37 @@ function HomePage() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeProject]);
+  }, [activeProject, activeInquiry]);
 
   useEffect(() => {
-    document.body.style.overflow = activeProject !== null ? "hidden" : "";
+    document.body.style.overflow =
+      activeProject !== null || activeInquiry !== null ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [activeProject]);
+  }, [activeProject, activeInquiry]);
 
   return (
     <>
+      <section className="grid min-h-[calc(100vh-5rem)] grid-cols-1 items-center gap-8 bg-black px-6 pb-12 pt-28 sm:px-10 md:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] md:gap-12 md:px-16 md:pb-16 md:pt-32 lg:px-24">
+        <div className="flex h-full min-h-[28rem] items-center justify-center md:min-h-[38rem]">
+          <img
+            src="/images/gerdy-home-portrait.png"
+            alt="Gerdy Abelard seated in a white cardigan"
+            className="max-h-[72vh] w-full object-contain object-center grayscale contrast-105"
+            fetchPriority="high"
+          />
+        </div>
+        <div className="border-t border-white/20 pt-5 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+          <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase leading-none tracking-[0.12em] text-white">
+            Gerdy Abelard
+          </h1>
+          <p className="mt-5 font-['GFS_Didot',serif] text-base italic tracking-[0.08em] text-white/65 sm:text-lg">
+            Director · Photographer · Founder
+          </p>
+        </div>
+      </section>
       {/* 2-Column Borderless Grid with Center Hover Reveals */}
       <main
         id="work"
@@ -246,6 +267,15 @@ function HomePage() {
             key={item.id}
             type="button"
             onClick={(event) => {
+              if (item.id === "03" || item.id === "04") {
+                lastFocusedElement.current = event.currentTarget;
+                setActiveInquiry(item.id === "03" ? "ophionoir" : "mello");
+                return;
+              }
+              if (item.link && item.link !== "#") {
+                window.open(item.link, "_blank", "noopener,noreferrer");
+                return;
+              }
               if (!item.isBlackAndWhite) {
                 lockActiveTile(item.id);
               }
@@ -262,7 +292,7 @@ function HomePage() {
               loading={item.id === "01" ? "eager" : "lazy"}
               decoding="async"
               fetchPriority={item.id === "01" ? "high" : "auto"}
-              className="grid-tile-image w-full h-full object-cover"
+              className="grid-tile-image w-full h-full object-contain bg-black"
             />
 
             {/* Deep shadow falloff — cinematic vignette */}
@@ -362,6 +392,79 @@ function HomePage() {
           </div>
         </div>
       )}
+      {activeInquiry && (
+        <div
+          className="fixed inset-0 z-1100 bg-black/95 flex items-center justify-center p-5 sm:p-8"
+          onClick={closeProject}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="inquiry-title"
+        >
+          <button
+            type="button"
+            onClick={closeProject}
+            aria-label="Close inquiry"
+            className="absolute top-6 right-6 sm:top-10 sm:right-10 text-white/70 hover:text-white font-['GFS_Didot',serif] text-2xl sm:text-3xl font-light leading-none transition-colors focus:outline-none"
+          >
+            ×
+          </button>
+          <div
+            className="w-full max-w-xl border border-white/20 bg-black p-7 sm:p-12"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="mb-4 text-[10px] uppercase tracking-[0.28em] text-white/45">
+              Venture inquiry
+            </p>
+            <h2
+              id="inquiry-title"
+              className="font-['GFS_Didot',serif] text-3xl sm:text-4xl uppercase tracking-wide text-white"
+            >
+              {activeInquiry === "mello" ? "Mello Minis" : "Ophionoir"}
+            </h2>
+            <p className="mt-5 text-sm leading-relaxed text-white/65">
+              {activeInquiry === "mello"
+                ? "In development."
+                : "Private development / early access."}
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-white/65">
+              Enter your email for updates or inquiries.
+            </p>
+            <form
+              className="mt-8"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setInquiryMessage(
+                  "Online submission is not configured. Please email contact@gerdyabelard.com."
+                );
+              }}
+            >
+              <label htmlFor="inquiry-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="inquiry-email"
+                type="email"
+                required
+                value={inquiryEmail}
+                onChange={(event) => setInquiryEmail(event.target.value)}
+                placeholder="EMAIL ADDRESS"
+                className="w-full border-b border-white/35 bg-transparent px-0 py-3 text-sm tracking-[0.12em] text-white placeholder:text-white/35 focus:border-white focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="mt-7 border border-white/35 px-5 py-3 text-[10px] uppercase tracking-[0.25em] text-white transition-colors hover:border-white focus:outline-none"
+              >
+                Submit
+              </button>
+              {inquiryMessage && (
+                <p className="mt-5 text-xs leading-relaxed text-white/60">
+                  {inquiryMessage}
+                </p>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -376,9 +479,9 @@ function AboutPage() {
         aria-hidden="true"
       >
         <img
-          src="/images/gerdy_portrait.png"
-          alt=""
-          className="w-full h-full object-cover object-[78%_38%] grayscale contrast-90 brightness-105"
+          src="/images/gerdy-about-portrait.png"
+          alt="Gerdy Abelard reclining in a brown suit and turtleneck"
+          className="w-full h-full object-contain object-right grayscale contrast-95 brightness-95"
         />
         {/* Wide soft fade — left edge blends into black */}
         <div
@@ -449,9 +552,9 @@ function AboutPage() {
 
         {/* Portrait — mobile only, inline below the text */}
         <img
-          src="/images/gerdy_portrait.png"
+          src="/images/gerdy-about-portrait.png"
           alt="Gerdy Abelard portrait"
-          className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-90 brightness-105"
+          className="md:hidden mt-10 w-full h-auto object-contain grayscale contrast-95 brightness-95"
         />
       </div>
     </div>
@@ -480,7 +583,7 @@ function ContactPage() {
 
         <div>
           <p className="text-xs sm:text-sm uppercase tracking-[0.15em] text-white/60 mb-2">
-            FOR COMMERCIAL & DIRECTING INQUIRIES:
+            COMMERCIAL & DIRECTING
           </p>
 
           <p className="text-base sm:text-lg text-white/90">
@@ -488,10 +591,10 @@ function ContactPage() {
           </p>
 
           <a
-            href="mailto:contact@comviewmedia.com"
+            href="mailto:studio@comviewmedia.com"
             className="text-sm sm:text-base text-white/70 hover:text-white transition-colors lowercase italic"
           >
-            contact@comviewmedia.com
+            studio@comviewmedia.com
           </a>
         </div>
 
@@ -509,6 +612,177 @@ function ContactPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function FilmPage() {
+  const filmEntries = [
+    {
+      title: "COMVIEWMEDIA",
+      subtitle: "Commercial film / visual direction",
+      image: "/images/comviewmedia/8FEF212A-77FA-4B76-9B1F-BD3BE330A743.JPEG",
+    },
+    {
+      title: "CINEMA OPTICS & RESEARCH",
+      subtitle: "35mm field studies / micro-contrast",
+      image: "/images/comviewmedia/3F93AE2E-9D14-434B-996D-AA69150AB018.JPEG",
+    },
+  ];
+
+  return (
+    <main className="min-h-screen bg-black px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
+      <div className="mx-auto max-w-[1500px]">
+        <header className="mb-12 max-w-2xl sm:mb-16">
+          <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/45">
+            Direction / moving image
+          </p>
+          <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white">
+            Film
+          </h1>
+        </header>
+        <div className="grid gap-2 md:grid-cols-2">
+          {filmEntries.map((entry) => (
+            <figure key={entry.title} className="group relative aspect-[16/10] overflow-hidden bg-[#111113]">
+              <img
+                src={entry.image}
+                alt={entry.title}
+                className="h-full w-full object-cover grayscale contrast-110 brightness-85 transition duration-700 group-hover:scale-[1.025] group-hover:brightness-100"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-5 pt-20">
+                <h2 className="font-title-signature text-lg uppercase tracking-[0.12em] text-white sm:text-xl">
+                  {entry.title}
+                </h2>
+                <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/55">
+                  {entry.subtitle}
+                </p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function VenturesPage() {
+  return (
+    <main className="min-h-screen bg-black px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
+      <div className="mx-auto max-w-[1500px]">
+        <header className="mb-12 max-w-2xl sm:mb-16">
+          <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/45">
+            Builds / systems / worlds
+          </p>
+          <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white">
+            Ventures
+          </h1>
+        </header>
+        <div className="grid grid-cols-1 gap-px bg-white/10 md:grid-cols-2">
+          {portfolioData.map((item) => (
+            <article key={item.id} className="group relative aspect-[16/10] overflow-hidden bg-[#080809]">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-full w-full object-cover grayscale contrast-110 brightness-80 transition duration-700 group-hover:scale-[1.025] group-hover:brightness-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-white/45">{item.role}</p>
+                <h2 className="font-title-signature text-xl uppercase tracking-[0.1em] text-white sm:text-2xl">
+                  {item.title}
+                </h2>
+                <p className="mt-2 max-w-md text-xs uppercase tracking-[0.12em] text-white/60">
+                  {item.subtitle}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+const archiveData = [
+  ["367A1A36-DBEA-4479-A208-4733243D3885.JPEG", "01", "Portrait / Study"],
+  ["3F93AE2E-9D14-434B-996D-AA69150AB018.JPEG", "02", "Portrait / Study"],
+  ["4B9CC685-E658-4686-9C80-F1C8A1F8F34B.JPEG", "03", "Portrait / Study"],
+  ["5B2D6299-114F-4212-ABDA-0FD0D1AFF831.JPEG", "04", "Portrait / Study"],
+  ["792E844E-6A6A-470F-8348-DB6A06BA552D.JPEG", "05", "Portrait / Study"],
+  ["9175A487-405C-443F-8C0B-3B9CBF023507.JPEG", "06", "Portrait / Study"],
+  ["A4132CDF-1A6E-4FFF-B92A-273F0F5C56D0.JPEG", "07", "Portrait / Study"],
+  ["E71D62CE-25D4-4437-9915-85F2DE7F1DAC.JPEG", "08", "Portrait / Study"],
+] as const;
+
+function ArchiveTile({
+  image,
+  index,
+  label,
+  className,
+}: {
+  image: string;
+  index: string;
+  label: string;
+  className: string;
+}) {
+  return (
+    <figure className={`group relative overflow-hidden bg-[#111113] ${className}`}>
+      <img
+        src={`/images/comviewmedia/${image}`}
+        alt={`Comviewmedia archive image ${index}`}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover grayscale contrast-110 brightness-90 transition-transform duration-700 ease-out group-hover:scale-[1.035] group-hover:brightness-100"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-70" />
+      <figcaption className="absolute bottom-0 left-0 right-0 flex items-center justify-between p-4 text-[10px] uppercase tracking-[0.2em] text-white/70 sm:p-5">
+        <span>{label}</span>
+        <span className="text-white/40">{index}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function ArchivePage() {
+  return (
+    <main className="w-full min-h-screen bg-[#000000] px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
+      <div className="mx-auto max-w-[1500px]">
+        <div className="mb-12 flex items-end justify-between gap-6 border-b border-white/15 pb-5 sm:mb-16">
+          <div>
+            <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/45">
+              Visual archive
+            </p>
+            <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white">
+              Archive
+            </h1>
+          </div>
+          <p className="hidden max-w-[180px] text-right text-[10px] uppercase leading-[1.7] tracking-[0.18em] text-white/45 sm:block">
+            Fifteen frames
+            <br />
+            One visual language
+          </p>
+        </div>
+
+        <section aria-label="Comviewmedia visual archive" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-12">
+          {archiveData.map(([image, index, label], itemIndex) => (
+            <ArchiveTile
+              key={image}
+              image={image}
+              index={index}
+              label={label}
+              className={
+                itemIndex === 0 || itemIndex === 7
+                  ? "aspect-[4/5] sm:col-span-2 lg:col-span-5 lg:row-span-2"
+                  : itemIndex === 1 || itemIndex === 8 || itemIndex === 13
+                    ? "aspect-[4/5] lg:col-span-3"
+                    : itemIndex === 4 || itemIndex === 10 || itemIndex === 14
+                      ? "aspect-[5/4] lg:col-span-4"
+                      : "aspect-[4/5] lg:col-span-3"
+              }
+            />
+          ))}
+        </section>
+      </div>
+    </main>
   );
 }
 
@@ -566,7 +840,10 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/film" element={<FilmPage />} />
+          <Route path="/ventures" element={<VenturesPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/archive" element={<ArchivePage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </div>
