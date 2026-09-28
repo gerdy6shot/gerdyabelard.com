@@ -109,23 +109,23 @@ function Header() {
         className="pointer-events-auto flex items-center gap-1 sm:gap-3 font-title-signature text-[10px] sm:text-xs tracking-[0.15em] uppercase text-white/70 select-none overflow-x-auto max-w-[62vw] sm:max-w-none flex-nowrap"
         aria-label="Main navigation"
       >
-        <a
-          href="https://comviewmedia.com/motion"
+        <Link
+          to="/work"
           className="hover:text-white cursor-pointer transition-colors focus:outline-none"
         >
-          FILM
-        </a>
+          WORK
+        </Link>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
         </span>
 
-        <a
-          href="https://comviewmedia.com/stills"
+        <Link
+          to="/archive"
           className="hover:text-white cursor-pointer transition-colors focus:outline-none"
         >
-          PHOTOGRAPHY
-        </a>
+          ART WORLD
+        </Link>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
@@ -148,17 +148,6 @@ function Header() {
         >
           ABOUT
         </Link>
-
-        <span className="text-white/30 font-light" aria-hidden="true">
-          |
-        </span>
-
-        <a
-          href="https://comviewmedia.com/art-world"
-          className="hover:text-white cursor-pointer transition-colors focus:outline-none"
-        >
-          {"{archive}"}
-        </a>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
@@ -255,6 +244,20 @@ function HomePage() {
           <p className="mt-5 font-['GFS_Didot',serif] text-base italic tracking-[0.08em] text-white/65 sm:text-lg">
             Director · Photographer · Founder
           </p>
+          <div className="mt-7 flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-8 font-title-signature text-[10px] uppercase tracking-[0.15em] text-white/70 sm:text-xs">
+            <a
+              href="https://comviewmedia.com/motion"
+              className="inline-flex min-h-11 items-center hover:text-white transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-white"
+            >
+              WATCH LATEST FILM
+            </a>
+            <a
+              href="https://comviewmedia.com/stills"
+              className="inline-flex min-h-11 items-center hover:text-white transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-white"
+            >
+              SELECTED WORK
+            </a>
+          </div>
         </div>
       </section>
       {/* 2-Column Borderless Grid with Center Hover Reveals */}
@@ -589,6 +592,26 @@ function ContactPage() {
   );
 }
 
+function WorkPage() {
+  return (
+    <main className="min-h-screen bg-black px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
+      <div className="mx-auto max-w-[1500px]">
+        <h1 className="mb-12 font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white sm:mb-16">
+          SELECTED WORK
+        </h1>
+        <div className="border-t border-white/20 font-title-signature uppercase tracking-[0.15em] text-white">
+          <a href="https://comviewmedia.com/motion" className="flex min-h-20 items-center justify-between border-b border-white/20 py-5 text-xl hover:text-white/65 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white sm:text-2xl">
+            MOTION <span aria-hidden="true">→</span>
+          </a>
+          <a href="https://comviewmedia.com/stills" className="flex min-h-20 items-center justify-between border-b border-white/20 py-5 text-xl hover:text-white/65 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white sm:text-2xl">
+            STILLS <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 function FilmPage() {
   const filmEntries = [
     {
@@ -726,7 +749,7 @@ function ArchivePage() {
               Visual archive
             </p>
             <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white">
-              Archive
+              Art World
             </h1>
           </div>
           <p className="hidden max-w-[180px] text-right text-[10px] uppercase leading-[1.7] tracking-[0.18em] text-white/45 sm:block">
@@ -814,6 +837,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/work" element={<WorkPage />} />
           <Route path="/film" element={<FilmPage />} />
           <Route path="/ventures" element={<VenturesPage />} />
           <Route path="/about" element={<AboutPage />} />
