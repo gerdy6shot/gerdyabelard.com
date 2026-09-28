@@ -600,11 +600,27 @@ function WorkPage() {
           SELECTED WORK
         </h1>
         <div className="border-t border-white/20 font-title-signature uppercase tracking-[0.15em] text-white">
-          <a href="https://comviewmedia.com/motion" className="flex min-h-20 items-center justify-between border-b border-white/20 py-5 text-xl hover:text-white/65 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white sm:text-2xl">
-            MOTION <span aria-hidden="true">→</span>
+          <a href="https://comviewmedia.com/motion" className="group grid gap-6 border-b border-white/20 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white md:grid-cols-[minmax(12rem,0.45fr)_minmax(0,1fr)] md:gap-10 md:py-12">
+            <span className="flex items-start justify-between text-xl group-hover:text-white/65 sm:text-2xl">
+              MOTION <span aria-hidden="true">→</span>
+            </span>
+            <img
+              src="/images/work-motion.jpg"
+              alt="Masked performer in a cinematic outdoor scene"
+              loading="lazy"
+              className="aspect-video w-full object-cover"
+            />
           </a>
-          <a href="https://comviewmedia.com/stills" className="flex min-h-20 items-center justify-between border-b border-white/20 py-5 text-xl hover:text-white/65 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white sm:text-2xl">
-            STILLS <span aria-hidden="true">→</span>
+          <a href="https://comviewmedia.com/stills" className="group grid gap-6 border-b border-white/20 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white md:grid-cols-[minmax(12rem,0.45fr)_minmax(0,1fr)] md:gap-10 md:py-12">
+            <span className="flex items-start justify-between text-xl group-hover:text-white/65 sm:text-2xl">
+              STILLS <span aria-hidden="true">→</span>
+            </span>
+            <img
+              src="/images/work-stills.jpeg"
+              alt="Editorial portrait of a man seated in a burgundy classic car"
+              loading="lazy"
+              className="w-full max-w-[30rem] justify-self-end object-contain"
+            />
           </a>
         </div>
       </div>
