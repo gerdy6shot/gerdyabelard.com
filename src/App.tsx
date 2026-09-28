@@ -520,7 +520,7 @@ function AboutPage() {
             Working across disciplines gives Gerdy a wider creative vocabulary: the precision of photography, the emotional rhythm of film, the structure of design, and the long-term thinking of product building. The result is work that is visually distinct, strategically coherent, and made to live beyond a single format.
           </p>
           <p>
-            Based in New York. Available internationally for commissions, collaborations, and select creative ventures.
+            Based in Los Angeles, with an active practice in New York and internationally.
           </p>
         </div>
 
