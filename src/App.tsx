@@ -511,42 +511,16 @@ function AboutPage() {
 
         <div className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.95rem] leading-[1.8] text-[#b0b0b0] font-light space-y-5">
           <p>
-            I've spent my career working across different
-            disciplines—ventures, technology, film, photography, fitness,
-            and writing.
+            Gerdy Abelard is a director, photographer, and aesthetic director whose work moves between cinema, photography, design, technology, and culture.
           </p>
           <p>
-            I didn't set out to collect titles. Most of it developed through
-            the work itself. Fitness led to years of training, bodybuilding,
-            and modeling. Photography grew into film, editing, directing,
-            and production. Building businesses led me deeper into products
-            and technology, where I began developing software and working
-            through the technical side of bringing ideas to life.
-          </p>
-          <p>I still work across all of these areas today.</p>
-          <p>
-            What I've learned in one discipline often becomes useful in
-            another. My experience in fitness influences products I build.
-            Photography influences how I direct. Writing influences how I
-            develop stories. Business changes how I think about whether an
-            idea can actually work. Technology gives me another way to build
-            and solve problems.
+            He builds visual worlds for people, brands, and ideas—developing not only the image, but the atmosphere, narrative, and underlying system that make it resonate. His practice spans commercial and editorial photography, film and motion, campaign development, creative direction, digital experiences, and independent ventures.
           </p>
           <p>
-            I don't try to fit all of that into one title. Titles are
-            useful for describing the role I'm performing at the time. The
-            work is the larger picture.
+            Working across disciplines gives Gerdy a wider creative vocabulary: the precision of photography, the emotional rhythm of film, the structure of design, and the long-term thinking of product building. The result is work that is visually distinct, strategically coherent, and made to live beyond a single format.
           </p>
-        </div>
-
-        <div className="w-full h-px bg-[#1a1a1a] my-8" aria-hidden="true" />
-
-        <div className="flex flex-col gap-[0.35rem]">
-          <p className="font-title-signature text-[0.95rem] tracking-widest text-white">
-            Based in Los Angeles
-          </p>
-          <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[0.8rem] tracking-[0.15em] uppercase text-white/50">
-            New York / Atlanta / Boston / Dallas / Lagos / Nairobi
+          <p>
+            Based in New York. Available internationally for commissions, collaborations, and select creative ventures.
           </p>
         </div>
 
