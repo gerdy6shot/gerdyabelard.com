@@ -627,9 +627,9 @@ function FilmPage() {
 function VenturesPage() {
   return (
     <main className="min-h-screen bg-black px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
-      <div className="mx-auto max-w-[1500px]">
-        <header className="mb-12 border-b border-white/15 pb-6 sm:mb-16">
-          <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/45">
+      <div className="mx-auto max-w-[1400px]">
+        <header className="mb-14 border-b border-white/12 pb-7 sm:mb-20">
+          <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/40">
             Builds / systems / worlds
           </p>
           <h1 className="font-title-signature text-[clamp(2rem,5vw,4.5rem)] uppercase tracking-[0.12em] text-white">
@@ -639,35 +639,44 @@ function VenturesPage() {
 
         <section
           aria-label="Gerdy Abelard ventures"
-          className="grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 lg:gap-x-16 lg:gap-y-20"
         >
           {portfolioData.map((item) => {
-            const content = (
+            const visual =
+              item.wordmark && item.id !== "07" ? (
+                <div className="max-w-[90%] text-center font-title-signature text-[clamp(1.45rem,3vw,2.5rem)] uppercase tracking-[0.16em] text-white">
+                  {item.wordmark}
+                </div>
+              ) : (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  decoding="async"
+                  className={
+                    item.id === "07"
+                      ? "max-h-[120px] w-auto max-w-[88%] object-contain"
+                      : item.id === "06"
+                        ? "max-h-[175px] w-auto max-w-[78%] object-contain grayscale"
+                        : "max-h-[150px] w-auto max-w-[76%] object-contain"
+                  }
+                />
+              );
+
+            const card = (
               <>
-                <div className="flex min-h-[220px] items-center justify-center bg-black p-8 sm:min-h-[250px] sm:p-10">
-                  {item.wordmark ? (
-                    <div className="max-w-[90%] text-center font-title-signature text-[clamp(1.35rem,3vw,2.5rem)] uppercase tracking-[0.16em] text-white">
-                      {item.wordmark}
-                    </div>
-                  ) : (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="max-h-[150px] w-auto max-w-[82%] object-contain"
-                    />
-                  )}
+                <div className="flex min-h-[245px] items-center justify-center bg-[#050505] px-8 py-10 sm:min-h-[270px]">
+                  {visual}
                 </div>
 
-                <div className="border-t border-white/10 bg-[#050505] p-5 sm:p-6">
+                <div className="border-t border-white/12 pt-5">
                   <p className="mb-2 text-[9px] uppercase tracking-[0.22em] text-white/35">
                     {item.role}
                   </p>
-                  <h2 className="font-title-signature text-lg uppercase tracking-[0.1em] text-white sm:text-xl">
+                  <h2 className="font-title-signature text-[clamp(1.35rem,2.2vw,2rem)] uppercase tracking-[0.1em] text-white">
                     {item.title}
                   </h2>
-                  <p className="mt-2 text-[10px] uppercase leading-relaxed tracking-[0.12em] text-white/50">
+                  <p className="mt-2 max-w-xl text-[10px] uppercase leading-relaxed tracking-[0.12em] text-white/45">
                     {item.subtitle}
                   </p>
                 </div>
@@ -680,15 +689,13 @@ function VenturesPage() {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block bg-black transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white"
+                className="group block focus-visible:outline focus-visible:outline-1 focus-visible:outline-white"
                 aria-label={`Visit ${item.title}`}
               >
-                {content}
+                {card}
               </a>
             ) : (
-              <article key={item.id} className="bg-black">
-                {content}
-              </article>
+              <article key={item.id}>{card}</article>
             );
           })}
         </section>
