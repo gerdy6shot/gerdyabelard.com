@@ -260,62 +260,7 @@ function HomePage() {
           </div>
         </div>
       </section>
-      {/* 2-Column Borderless Grid with Center Hover Reveals */}
-      <main
-        id="work"
-        className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-[#000000] pt-19 md:pt-23"
-      >
-        {portfolioData.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={(event) => {
-              if (item.id === "03" || item.id === "04") {
-                lastFocusedElement.current = event.currentTarget;
-                setActiveInquiry(item.id === "03" ? "ophionoir" : "mello");
-                return;
-              }
-              if (item.link && item.link !== "#") {
-                window.open(item.link, "_blank", "noopener,noreferrer");
-                return;
-              }
-              if (!item.isBlackAndWhite) {
-                lockActiveTile(item.id);
-              }
-              openProject(item, event);
-            }}
-            className={`grid-tile relative aspect-[16/9] w-full overflow-hidden cursor-pointer group bg-[#080809] block text-left select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-inset ${
-              activeTiles.has(item.id) ? "is-active" : ""
-            } ${item.isBlackAndWhite ? "is-mono" : ""}`}
-            aria-label={`View ${item.title} project details`}
-          >
-            <img
-              src={item.image}
-              alt={`${item.title} — ${item.subtitle}`}
-              loading={item.id === "01" ? "eager" : "lazy"}
-              decoding="async"
-              fetchPriority={item.id === "01" ? "high" : "auto"}
-              className="grid-tile-image w-full h-full object-contain bg-black"
-            />
-
-            {/* Deep shadow falloff — cinematic vignette */}
-            <div
-              className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.6)_100%)]"
-              aria-hidden="true"
-            />
-
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 bg-black/40 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-400 ease-out">
-              <h2 className="font-['GFS_Didot',serif] text-2xl sm:text-3xl md:text-4xl text-white font-normal uppercase tracking-wide leading-tight drop-shadow-lg">
-                {item.title}
-              </h2>
-
-              <p className="mt-3 font-['GFS_Didot',serif] italic text-sm sm:text-base text-white/80 max-w-md font-light">
-                {item.subtitle}
-              </p>
-            </div>
-          </button>
-        ))}
-      </main>
+      {/* Homepage intentionally keeps venture/project imagery off this route. */}
 
       {/* Footer */}
       <footer className="px-6 md:px-12 py-12 flex justify-between items-center text-[10px] uppercase tracking-[0.25em] font-light text-white/30 border-t border-white/5">
