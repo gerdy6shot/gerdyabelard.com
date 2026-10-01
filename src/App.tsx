@@ -122,12 +122,12 @@ function Header() {
           |
         </span>
 
-        <Link
-          to="/archive"
+        <a
+          href="https://comviewmedia.com/art-world"
           className="hover:text-white cursor-pointer transition-colors focus:outline-none"
         >
           ART WORLD
-        </Link>
+        </a>
 
         <span className="text-white/30 font-light" aria-hidden="true">
           |
