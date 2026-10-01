@@ -24,7 +24,7 @@ const portfolioData: ProjectItem[] = [
     role: "FOUNDED & DIRECTED BY GERDY ABELARD",
     description:
       "Motion picture directing, high-contrast cinema optics, and visual narrative systems for commercial and editorial productions.",
-    image: "/images/ventures/comviewmedia-logo.png",
+    image: "/images/ventures/comviewmedia-og.jpg",
     link: "https://comviewmedia.com",
     linkText: "VISIT COMVIEWMEDIA.COM →",
   },
@@ -46,7 +46,7 @@ const portfolioData: ProjectItem[] = [
     role: "BRAND ARCHITECTURE & DEVELOPMENT",
     description:
       "Ultra-premium agave distillation study, luxury bottle geometry, tactile materials, and disciplined visual prestige.",
-    image: "/images/ventures/ophionoir-icon.png",
+    image: "/images/ventures/ophionoir-image.jpg",
     link: "#",
     linkText: "PRIVATE DEVELOPMENT",
   },
@@ -80,8 +80,7 @@ const portfolioData: ProjectItem[] = [
     role: "DIGITAL ARCHIVE / WEBSITE DEVELOPMENT",
     description:
       "A digital archival museum preserving Kenneth Harris's photography, legacy, and more than five decades of cultural documentation.",
-    image: "",
-    wordmark: "KEN THE PHOTOGRAPHER",
+    image: "/images/ventures/ken-the-photographer-logo.webp",
     link: "https://kenthephotographer.com",
     linkText: "VISIT KENTHEPHOTOGRAPHER.COM →",
   },
