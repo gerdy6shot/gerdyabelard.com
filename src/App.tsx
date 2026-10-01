@@ -11,6 +11,7 @@ interface ProjectItem {
   link?: string;
   linkText?: string;
   isBlackAndWhite?: boolean;
+  wordmark?: string;
 }
 
 type InquiryKind = "mello" | "ophionoir";
@@ -23,7 +24,7 @@ const portfolioData: ProjectItem[] = [
     role: "FOUNDED & DIRECTED BY GERDY ABELARD",
     description:
       "Motion picture directing, high-contrast cinema optics, and visual narrative systems for commercial and editorial productions.",
-    image: "/images/ventures/comviewmedia-og.jpg",
+    image: "/images/ventures/comviewmedia-logo.png",
     link: "https://comviewmedia.com",
     linkText: "VISIT COMVIEWMEDIA.COM →",
   },
@@ -34,7 +35,7 @@ const portfolioData: ProjectItem[] = [
     role: "FOUNDED & ARCHITECTED BY GERDY ABELARD",
     description:
       "Physical training architecture, nutritional precision, and performance tracking systems engineered for daily execution and consistency.",
-    image: "/images/ventures/overhaultrain-logo.jpeg",
+    image: "/images/ventures/overhaultrain-logo.png",
     link: "https://overhaultrain.com",
     linkText: "VISIT OVERHAULTRAIN.COM →",
   },
@@ -45,20 +46,9 @@ const portfolioData: ProjectItem[] = [
     role: "BRAND ARCHITECTURE & DEVELOPMENT",
     description:
       "Ultra-premium agave distillation study, luxury bottle geometry, tactile materials, and disciplined visual prestige.",
-    image: "/images/ventures/ophionoir-image.jpg",
+    image: "/images/ventures/ophionoir-icon.png",
     link: "#",
     linkText: "PRIVATE DEVELOPMENT",
-  },
-  {
-    id: "04",
-    title: "MELLO MINIS",
-    subtitle: "Agave Infrastructure & Scaled Goods",
-    role: "PRODUCT ARCHITECTURE",
-    description:
-      "Scalable consumer goods infrastructure, bespoke label design, and logistics packaging systems.",
-    image: "/images/ventures/mello-minis-logo.png",
-    link: "#",
-    linkText: "IN DEVELOPMENT",
   },
   {
     id: "05",
@@ -68,6 +58,7 @@ const portfolioData: ProjectItem[] = [
     description:
       "Heritage-driven botanical spirits, cultural storytelling, and origin-focused distillation identity.",
     image: "/images/ventures/roce-de-libertad.jpeg",
+    wordmark: "✦  ROCE DE LIBERTAD",
     link: "https://rocedelibertad.com",
     linkText: "VISIT ROCE DE LIBERTAD.COM →",
   },
@@ -81,6 +72,18 @@ const portfolioData: ProjectItem[] = [
     image: "/images/comviewmedia/11C1F314-7D4D-4397-B885-7322031B62A2.JPEG",
     link: "#",
     linkText: "VIEW FIELD NOTES",
+  },
+  {
+    id: "07",
+    title: "KEN THE PHOTOGRAPHER",
+    subtitle: "Archival Museum & Photography Legacy",
+    role: "DIGITAL ARCHIVE / WEBSITE DEVELOPMENT",
+    description:
+      "A digital archival museum preserving Kenneth Harris's photography, legacy, and more than five decades of cultural documentation.",
+    image: "",
+    wordmark: "KEN THE PHOTOGRAPHER",
+    link: "https://kenthephotographer.com",
+    linkText: "VISIT KENTHEPHOTOGRAPHER.COM →",
   },
 ];
 
@@ -626,7 +629,7 @@ function VenturesPage() {
   return (
     <main className="min-h-screen bg-black px-5 pb-24 pt-32 sm:px-8 md:px-12 lg:px-20">
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-12 max-w-2xl sm:mb-16">
+        <header className="mb-12 border-b border-white/15 pb-6 sm:mb-16">
           <p className="mb-3 font-title-signature text-[10px] uppercase tracking-[0.28em] text-white/45">
             Builds / systems / worlds
           </p>
@@ -634,27 +637,62 @@ function VenturesPage() {
             Ventures
           </h1>
         </header>
-        <div className="grid grid-cols-1 gap-px bg-white/10 md:grid-cols-2">
-          {portfolioData.map((item) => (
-            <article key={item.id} className="group relative aspect-[16/10] overflow-hidden bg-[#080809]">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-full w-full object-cover grayscale contrast-110 brightness-80 transition duration-700 group-hover:scale-[1.025] group-hover:brightness-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-                <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-white/45">{item.role}</p>
-                <h2 className="font-title-signature text-xl uppercase tracking-[0.1em] text-white sm:text-2xl">
-                  {item.title}
-                </h2>
-                <p className="mt-2 max-w-md text-xs uppercase tracking-[0.12em] text-white/60">
-                  {item.subtitle}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
+
+        <section
+          aria-label="Gerdy Abelard ventures"
+          className="grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {portfolioData.map((item) => {
+            const content = (
+              <>
+                <div className="flex min-h-[220px] items-center justify-center bg-black p-8 sm:min-h-[250px] sm:p-10">
+                  {item.wordmark ? (
+                    <div className="max-w-[90%] text-center font-title-signature text-[clamp(1.35rem,3vw,2.5rem)] uppercase tracking-[0.16em] text-white">
+                      {item.wordmark}
+                    </div>
+                  ) : (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-[150px] w-auto max-w-[82%] object-contain"
+                    />
+                  )}
+                </div>
+
+                <div className="border-t border-white/10 bg-[#050505] p-5 sm:p-6">
+                  <p className="mb-2 text-[9px] uppercase tracking-[0.22em] text-white/35">
+                    {item.role}
+                  </p>
+                  <h2 className="font-title-signature text-lg uppercase tracking-[0.1em] text-white sm:text-xl">
+                    {item.title}
+                  </h2>
+                  <p className="mt-2 text-[10px] uppercase leading-relaxed tracking-[0.12em] text-white/50">
+                    {item.subtitle}
+                  </p>
+                </div>
+              </>
+            );
+
+            return item.link && item.link !== "#" ? (
+              <a
+                key={item.id}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block bg-black transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-1 focus-visible:outline-white"
+                aria-label={`Visit ${item.title}`}
+              >
+                {content}
+              </a>
+            ) : (
+              <article key={item.id} className="bg-black">
+                {content}
+              </article>
+            );
+          })}
+        </section>
       </div>
     </main>
   );
